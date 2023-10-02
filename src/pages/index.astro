@@ -1,5 +1,11 @@
 ---
 
+const pages = [
+	{
+		href: '/01_fit-perspective',
+		txt: '01_fit-perspective'
+	}
+]
 ---
 
 <html lang="en">
@@ -12,5 +18,12 @@
 	</head>
 	<body>
 		<h1>Astro</h1>
+		<ol>
+			{
+				pages.map(page => {
+					return <li><a href={`./survey/${page.href}`}>{page.txt}</a></li>
+				})
+			}
+		</ol>
 	</body>
 </html>
