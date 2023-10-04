@@ -20,6 +20,8 @@ class AmbientLightApp extends BasicApp {
   protected torusParams: any;
   protected torusBuffer: any;
 
+  private directionalLightPos = [0.0, 10.0, 0.0];
+
   constructor() {
     super(vShader, fShader, [0.0, 2.0, 5.0]);
 
@@ -32,7 +34,7 @@ class AmbientLightApp extends BasicApp {
     const gl = this.gl;
     const planeGeometory = this.planeGeometory = new PlaneGeometry(3, 3);
 
-    const planeColor = [.0, 1.0, .0];
+    const planeColor = [.75, .75, .75];
     const planeGeometoryColor = [...Array(planeGeometory.position.length / 3)].map(() => [...planeColor, 1.0]).flat();
     this.planeBuffer = {
       v: [
@@ -44,7 +46,7 @@ class AmbientLightApp extends BasicApp {
       i: webglFunc.create_ibo(gl, planeGeometory.index)
     }
 
-    const torusColor = [1.0, .0, .0];
+    const torusColor = [1.0, 1.0, 1.0];
     const torusGeometory = this.torusGeometory = Torus(100, 100, .1, .25, [...torusColor, 1.0]);
     this.torusBuffer = {
       v: [
@@ -69,6 +71,8 @@ class AmbientLightApp extends BasicApp {
       uniLocation: {
         mMatrix: gl.getUniformLocation(this.renderProgram, 'mMatrix'),
         mvpMatrix: gl.getUniformLocation(this.renderProgram, 'mvpMatrix'),
+        invMatrix: gl.getUniformLocation(this.renderProgram, 'invMatrix'),
+        directionalLightPos: gl.getUniformLocation(this.renderProgram, 'directionalLightPos'),
         time: gl.getUniformLocation(this.renderProgram, 'time'),
       }
     }
@@ -124,7 +128,7 @@ class AmbientLightApp extends BasicApp {
   
       m.rotate(
         this.mat.mMatrix,
-        this.deg2rad(90),
+        -this.nowTime,
         [1.0, 0.0, 0.0],
         this.mat.mMatrix,
       );
@@ -140,14 +144,18 @@ class AmbientLightApp extends BasicApp {
   setUniformValue() {
     const gl = this.gl;
 
-    const {mvpMatrix, mMatrix, time} = this.renderParams.uniLocation;
+    const {mvpMatrix, mMatrix, invMatrix, directionalLightPos, time} = this.renderParams.uniLocation;
     gl.uniformMatrix4fv(mvpMatrix, false, this.mat.mvpMatrix);
     gl.uniformMatrix4fv(mMatrix, false, this.mat.mMatrix);
+    gl.uniformMatrix4fv(invMatrix, false, this.mat.invMatrix);
+    gl.uniform3fv(directionalLightPos, this.directionalLightPos);
     gl.uniform1f(time, this.nowTime);
   }
 
   protected render() {
     this.raf();
     this.drawGeometory();
+
+    requestAnimationFrame(this.render.bind(this))
   }
 }

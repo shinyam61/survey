@@ -2,13 +2,9 @@
 
 const pages = [
 {
-		href: '/01_fit-perspective',
-		txt: '01_fit-perspective'
+		href: '/01_directional-light',
+		txt: '01_directional-light'
 	},
-	{
-		href: '/02_light',
-		txt: '02_light'
-	}
 ]
 ---
 
@@ -18,14 +14,14 @@ const pages = [
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>WebGL Survey</title>
+		<title>Astro</title>
 	</head>
 	<body>
-		<h1>WebGL Survey</h1>
+		<h1>Light</h1>
 		<ol>
 			{
 				pages.map(page => {
-					return <li><a href={`./survey${page.href}`}>{page.txt}</a></li>
+					return <li><a href={`./02_light${page.href}`}>{page.txt}</a></li>
 				})
 			}
 		</ol>

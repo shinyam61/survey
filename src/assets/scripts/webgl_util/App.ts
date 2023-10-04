@@ -123,8 +123,6 @@ export default abstract class {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
     gl.useProgram(this.renderProgram);
-
-    requestAnimationFrame(this.render.bind(this));
   }
 
   protected abstract drawGeometory(): void;
