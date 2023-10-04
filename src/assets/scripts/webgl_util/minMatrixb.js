@@ -392,7 +392,12 @@ function torus(row, column, irad, orad, color){
 			idx.push(r + column + 1, r + column + 2, r + 1);
 		}
 	}
-	return {p : pos, n : nor, c : col, t : st, i : idx};
+	return {
+		p : pos, 
+		n : nor, 
+		c : col, 
+		t : st, 
+		i : idx};
 }
 
 function sphere(row, column, rad, color){
@@ -501,4 +506,5 @@ export {
 	matIV,
 	qtnIV,
 	sphere,
+	torus
 }
