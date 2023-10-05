@@ -100,11 +100,6 @@ class AmbientLightApp extends BasicApp {
       // モデル座標変換行列の生成
     m.identity(this.mat.mMatrix);
 
-    m.translate(
-      this.mat.mMatrix,
-      [0.0, -0.3, 0.0],
-      this.mat.mMatrix,
-    );
     m.rotate(
       this.mat.mMatrix,
       this.deg2rad(-90),
@@ -128,6 +123,11 @@ class AmbientLightApp extends BasicApp {
       // モデル座標変換行列の生成
       m.identity(this.mat.mMatrix);
   
+      m.translate(
+        this.mat.mMatrix,
+        [.0, .5, 0.0],
+        this.mat.mMatrix,
+      );
       m.rotate(
         this.mat.mMatrix,
         -this.nowTime,

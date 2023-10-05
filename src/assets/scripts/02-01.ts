@@ -72,6 +72,7 @@ class AmbientLightApp extends BasicApp {
         mMatrix: gl.getUniformLocation(this.renderProgram, 'mMatrix'),
         mvpMatrix: gl.getUniformLocation(this.renderProgram, 'mvpMatrix'),
         invMatrix: gl.getUniformLocation(this.renderProgram, 'invMatrix'),
+        nMatrix: gl.getUniformLocation(this.renderProgram, 'nMatrix'),
         directionalLightPos: gl.getUniformLocation(this.renderProgram, 'directionalLightPos'),
         time: gl.getUniformLocation(this.renderProgram, 'time'),
       }
@@ -98,11 +99,6 @@ class AmbientLightApp extends BasicApp {
       // モデル座標変換行列の生成
     m.identity(this.mat.mMatrix);
 
-    m.translate(
-      this.mat.mMatrix,
-      [0.0, -0.3, 0.0],
-      this.mat.mMatrix,
-    );
     m.rotate(
       this.mat.mMatrix,
       this.deg2rad(-90),
@@ -112,8 +108,9 @@ class AmbientLightApp extends BasicApp {
 
     m.multiply(this.mat.tmpMatrix, this.mat.mMatrix, this.mat.mvpMatrix);
     m.inverse(this.mat.mMatrix, this.mat.invMatrix);
+    const normalMatrix = m.transpose(this.mat.mMatrix, m.create());
 
-    this.setUniformValue();
+    this.setUniformValue({normalMatrix});
 
     gl.drawElements(gl.TRIANGLES, this.planeGeometory.index.length, gl.UNSIGNED_SHORT, 0);
 
@@ -126,6 +123,11 @@ class AmbientLightApp extends BasicApp {
       // モデル座標変換行列の生成
       m.identity(this.mat.mMatrix);
   
+      m.translate(
+        this.mat.mMatrix,
+        [.0, .5, 0.0],
+        this.mat.mMatrix,
+      );
       m.rotate(
         this.mat.mMatrix,
         -this.nowTime,
@@ -135,19 +137,21 @@ class AmbientLightApp extends BasicApp {
   
       m.multiply(this.mat.tmpMatrix, this.mat.mMatrix, this.mat.mvpMatrix);
       m.inverse(this.mat.mMatrix, this.mat.invMatrix);
+      const normalMatrix = m.transpose(this.mat.mMatrix, m.create());
 
-      this.setUniformValue();
-    
+      this.setUniformValue({normalMatrix});
+      
       gl.drawElements(gl.TRIANGLES, this.torusGeometory.i.length, gl.UNSIGNED_SHORT, 0);
   }
 
-  setUniformValue() {
+  setUniformValue({ normalMatrix }: any) {
     const gl = this.gl;
 
-    const {mvpMatrix, mMatrix, invMatrix, directionalLightPos, time} = this.renderParams.uniLocation;
+    const {mvpMatrix, mMatrix, invMatrix, nMatrix, directionalLightPos, time} = this.renderParams.uniLocation;
     gl.uniformMatrix4fv(mvpMatrix, false, this.mat.mvpMatrix);
     gl.uniformMatrix4fv(mMatrix, false, this.mat.mMatrix);
     gl.uniformMatrix4fv(invMatrix, false, this.mat.invMatrix);
+    gl.uniformMatrix4fv(nMatrix, false, normalMatrix);
     gl.uniform3fv(directionalLightPos, this.directionalLightPos);
     gl.uniform1f(time, this.nowTime);
   }
