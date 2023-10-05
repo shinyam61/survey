@@ -19,7 +19,7 @@ import Canvas from '../components/Canvas.astro';
 		<title>{title}</title>
 	</head>
 	<body>
-		<h1 class={`_${title.replace(/[-]/g, '_')}`}>{title}</h1>
+		<h1 class={`_${title.replace(/[-]/g, '_').split(' ')[0]}`}>{title}</h1>
     <Canvas />
     <slot />
 	</body>
