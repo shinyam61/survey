@@ -52,7 +52,7 @@ class AmbientLightApp extends BasicApp {
     }
 
     const torusColor = [1.0, 1.0, 1.0];
-    const torusGeometory = this.torusGeometory = Torus(100, 100, .25, .5, [...torusColor, 1.0]);
+    const torusGeometory = this.torusGeometory = Torus(100, 100, .2, .5, [...torusColor, 1.0]);
     this.torusBuffer = {
       v: [
         webglFunc.create_vbo(gl, torusGeometory.p),
@@ -113,7 +113,7 @@ class AmbientLightApp extends BasicApp {
     const m = new matIV();
 
     this.drawFloor(gl, m);
-    // this.drawTorus(gl, m);
+    this.drawTorus(gl, m);
   }
 
   drawFloor (gl: WebGLRenderingContext, m: matIV) {
@@ -124,12 +124,12 @@ class AmbientLightApp extends BasicApp {
       // モデル座標変換行列の生成
     m.identity(this.mat.mMatrix);
 
-    // m.rotate(
-    //   this.mat.mMatrix,
-    //   this.deg2rad(-90),
-    //   [1.0, 0.0, 0.0],
-    //   this.mat.mMatrix,
-    // );
+    m.rotate(
+      this.mat.mMatrix,
+      this.deg2rad(-90),
+      [1.0, 0.0, 0.0],
+      this.mat.mMatrix,
+    );
 
     m.multiply(this.mat.tmpMatrix, this.mat.mMatrix, this.mat.mvpMatrix);
     m.inverse(this.mat.mMatrix, this.mat.invMatrix);
