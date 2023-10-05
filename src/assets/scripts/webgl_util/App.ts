@@ -136,6 +136,6 @@ export default abstract class {
   }
 
   protected deg2rad (degree: number) {
-    return degree * (Math.PI / 360);
+    return degree * (Math.PI / 180);
   }
 }
