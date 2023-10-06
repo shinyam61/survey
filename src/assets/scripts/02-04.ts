@@ -92,8 +92,8 @@ class AmbientLightApp extends BasicApp {
     console.log('loadScopeEnv')
     const gui = new GUI();
     const params = {
-      outer: 1.6,
-      inner: .5
+      outer: 5.0,
+      inner: 1.5
     }
     this.params = params;
     gui.add( params, 'outer' )
@@ -133,7 +133,7 @@ class AmbientLightApp extends BasicApp {
 
     m.multiply(this.mat.tmpMatrix, this.mat.mMatrix, this.mat.mvpMatrix);
     m.inverse(this.mat.mMatrix, this.mat.invMatrix);
-    const normalMatrix = m.transpose(this.mat.mMatrix, m.create());
+    const normalMatrix = m.transpose(this.mat.invMatrix, m.create());
 
     this.setUniformValue({normalMatrix});
 
@@ -155,14 +155,14 @@ class AmbientLightApp extends BasicApp {
       );
       m.rotate(
         this.mat.mMatrix,
-        this.deg2rad(-90),
+        this.nowTime,
         [1.0, 0.0, 0.0],
         this.mat.mMatrix,
       );
   
       m.multiply(this.mat.tmpMatrix, this.mat.mMatrix, this.mat.mvpMatrix);
       m.inverse(this.mat.mMatrix, this.mat.invMatrix);
-      const normalMatrix = m.transpose(this.mat.mMatrix, m.create());
+      const normalMatrix = m.transpose(this.mat.invMatrix, m.create());
 
       this.setUniformValue({normalMatrix});
       
@@ -180,8 +180,15 @@ class AmbientLightApp extends BasicApp {
     gl.uniform3fv(directionalLightPos, this.directionalLightPos);
     gl.uniform3fv(spotLightPos, this.spotLightPos);
     gl.uniform3fv(spotLightTarget, this.spotLightTarget);
-    gl.uniform1f(spotLightOuter, this.params.outer);
-    gl.uniform1f(spotLightInner, this.params.inner);
+
+    // 光の視野角（水平）、仰俯角（上下）の角度：outer, innerどちらも spotLightTargetから開く角度
+    //  outer*2 = 視野角 or 仰俯角, outer = 正面から左or右への角度,仰角or俯角
+    //  -> 180度の場合はポイントライトと同じ効果
+    //  inner -> outer までが光の減衰効果となり、同じ数値の場合にはパキッと色が出る
+    const outerLimit = Math.cos(this.params.outer * (Math.PI / 180.0));
+    const innerLimit = Math.cos(this.params.inner * (Math.PI / 180.0));
+    gl.uniform1f(spotLightOuter, outerLimit);
+    gl.uniform1f(spotLightInner, innerLimit);
     gl.uniform1f(time, this.nowTime);
   }
 
