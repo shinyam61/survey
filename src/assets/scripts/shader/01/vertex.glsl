@@ -28,9 +28,9 @@ float backOut(float t) {
 }
 
 
-// vec2 startUv = vec2(.5, .5); // 中心から
-vec2 startUv = vec2(.0, 1.0); // 左上から
-vec2 endUv = vec2(1.0, .0);
+vec2 startUv = vec2(.5, .5); // 中心から
+// vec2 startUv = vec2(.0, 1.0); // 左上から
+vec2 endUv = vec2(1.0, 1.0);
 
 
 void main () {
