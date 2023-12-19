@@ -29,8 +29,8 @@ jobs:
         env:
           JEKYLL_ENV: production # Set the JEKYLL_ENV to production for the build step
         run: |
-          bundle install # You may need to run this command to ensure the required gems are installed
-          jekyll build --trace # Add --trace option to enable Jekyll debug mode
+          bundle install
+          jekyll build --trace
 
   deploy:
     needs: build
