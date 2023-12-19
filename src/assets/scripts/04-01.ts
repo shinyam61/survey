@@ -28,7 +28,8 @@ class App {
   #renderParams: any;
   #renderBuffer: any;
   #planeParams = [2.0, window.innerHeight / window.innerWidth * 2, 32];
-  #planeGeometory = new PlaneGeometory(this.#planeParams[0], this.#planeParams[1], this.#planeParams[2], this.#planeParams[2]);
+  // #planeGeometory = new PlaneGeometory(this.#planeParams[0], this.#planeParams[1], this.#planeParams[2], this.#planeParams[2]);
+  #planeGeometory = new PlaneGeometory(2.0, 2.0);
 
   #startTime = Date.now();
   #eyeDirection = [0.0, 0.0, 3.0];
@@ -238,8 +239,8 @@ class App {
 
         // モデル座標変換行列の生成
       m.identity(this.#mat.mMatrix);
-      m.multiply(this.#mat.tmpMatrix, this.#mat.mMatrix, this.#mat.mvpMatrix);
-      m.inverse(this.#mat.mMatrix, this.#mat.invMatrix);
+      // m.multiply(this.#mat.tmpMatrix, this.#mat.mMatrix, this.#mat.mvpMatrix);
+      // m.inverse(this.#mat.mMatrix, this.#mat.invMatrix);
 
       gl.uniformMatrix4fv(this.#renderParams.uniLocation.mvpMatrix, false, this.#mat.mvpMatrix);
       gl.uniformMatrix4fv(this.#renderParams.uniLocation.mMatrix, false, this.#mat.mMatrix);
