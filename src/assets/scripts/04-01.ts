@@ -158,8 +158,8 @@ class App {
     console.log(this.#mat.scaleMatrix)
 
     const imgPromise = [
-      this.#loadTexture('/survey/images/sample/01.jpg'),
-      this.#loadTexture('/survey/images/sample/02.jpg')
+      this.#loadTexture('/images/sample/01.jpg'),
+      this.#loadTexture('/images/sample/02.jpg')
     ]
     await Promise.all(imgPromise)
       .then((images) => {

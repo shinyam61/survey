@@ -33,7 +33,7 @@ const pages = [
 		<ol>
 			{
 				pages.map(page => {
-					return <li><a href={`/survey${page.href}`}>{page.txt}</a></li>
+					return <li><a href={`${page.href}`}>{page.txt}</a></li>
 				})
 			}
 		</ol>

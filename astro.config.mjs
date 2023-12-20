@@ -5,8 +5,7 @@ const isDev = process.env.NODE_ENV !== "production";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://shinyam61.github.io',
-  base: '/survey',
+  base: '/',
   vite: {
     plugins: [glsl()],
     build: {
