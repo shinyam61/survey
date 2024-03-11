@@ -107,6 +107,7 @@ export default class App {
         // mMatrix: gl?.getUniformLocation(this.#renderProgram, 'mMatrix'),
         // mvpMatrix: gl?.getUniformLocation(this.#renderProgram, 'mvpMatrix'),
         // scaleMatrix: gl?.getUniformLocation(this.#renderProgram, 'scaleMatrix'),
+        resolution: gl?.getUniformLocation(this.#renderProgram, 'resolution'),
         time: gl?.getUniformLocation(this.#renderProgram, 'time'),
         // progress: gl?.getUniformLocation(this.#renderProgram, 'progress'),
         tex1: gl?.getUniformLocation(this.#renderProgram, 'tex1'),
@@ -244,6 +245,7 @@ export default class App {
       // gl.uniformMatrix4fv(this.#renderParams.uniLocation.mvpMatrix, false, this.#mat.mvpMatrix);
       // gl.uniformMatrix4fv(this.#renderParams.uniLocation.mMatrix, false, this.#mat.mMatrix);
       // gl.uniformMatrix4fv(this.#renderParams.uniLocation.scaleMatrix, false, this.#mat.scaleMatrix);
+      gl.uniform2fv(this.#renderParams.uniLocation.resolution, this.#resolution);
       gl.uniform1f(this.#renderParams.uniLocation.time, nowTime);
       // console.log({nowTime})
       // gl.uniform1f(this.#renderParams.uniLocation.progress, this.#params.progress);
