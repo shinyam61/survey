@@ -13,7 +13,7 @@ float noise(float time,vec2 resolution) {vec2 coord=gl_FragCoord.xy/resolution;v
 
 void main () {
 
-  float n = noise(time, resolution);
+  float n = noise(time * 5., resolution);
   float p = clamp((cos(time / 1.5) * .6) + .5, 0., 1.);
 
   vec2 uv = 1.0 - vUv;
