@@ -13,8 +13,9 @@ float noise(float time,vec2 resolution) {vec2 coord=gl_FragCoord.xy/resolution;v
 
 void main () {
 
+  float angle = time / .5;
   float n = noise(time * 5., resolution) * .075;
-  float p = clamp((cos(time / .5) * .6) + .5, 0., 1.);
+  float p = clamp((cos(angle) * .6) + .5, 0., 1.);
 
   vec2 uv = 1.0 - vUv;
 
@@ -30,7 +31,7 @@ void main () {
   float edgeEnd = clamp(n + p2 + edgeWidth, 0., 1.);
   float x = smoothstep(p2 == 1. ? edgeEnd: edgeStart, edgeEnd, uv.x);
 
-  bool isToRight = sign(mod(time / .5, (3.14 * 2.)) - 3.14) < 0.;
+  bool isToRight = sign(mod(angle, (3.14 * 2.)) - 3.14) < 0.;
   float y = smoothstep(0.3, .5, x) * smoothstep(0.7, 0.6, x);
   float fireInten = smoothstep(isToRight ? 0.3 : 0.4, isToRight ? 0.6 : 0.7, x);
   vec4 texture = mix(texColor1, texColor2, x);
