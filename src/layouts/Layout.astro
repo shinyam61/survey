@@ -1,9 +1,10 @@
 --- 
 interface Props {
 	title: string
+  reference?: string
 }
 
-const { title } = Astro.props;
+const { title, reference } = Astro.props;
 
 import Canvas from '../components/Canvas.astro';
 ---
@@ -22,6 +23,11 @@ import Canvas from '../components/Canvas.astro';
 		<h1 class={`_${title.replace(/[-]/g, '_').split(' ')[0]}`}>{title}</h1>
     <Canvas />
     <slot />
+    {
+      reference
+        ? <p class="reference">参考サイト：<a href={reference}></a>{reference}</p>
+        : ''
+    }
 	</body>
 </html>
 
@@ -54,5 +60,12 @@ import Canvas from '../components/Canvas.astro';
     z-index: 0;
     width: 100%;
     height: 100vh;
+  }
+  p.reference {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 0 1rem 1rem 0;
+    mix-blend-mode: difference;
   }
 </style>

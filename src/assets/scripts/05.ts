@@ -204,6 +204,7 @@ export default class App {
     }
 
     const nowTime = (Date.now() - this.#startTime) * 0.0005;
+    console.log({nowTime})
 
     const m = new matIV();
 
